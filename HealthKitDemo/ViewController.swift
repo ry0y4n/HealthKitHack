@@ -44,16 +44,35 @@ class ViewController: UIViewController {
             guard error == nil else {
                 return
             }
-            let data = result![0] as! HKQuantitySample
-            let unit = HKUnit(from: "count/min")
-            let latestHr = data.quantity.doubleValue(for: unit)
-            print("Latest Hr\(latestHr) BPM")
+//            let data = result![0] as! HKQuantitySample
+//            let unit = HKUnit(from: "count/min")
+//            let latestHr = data.quantity.doubleValue(for: unit)
+//            print("Data Count \(result!.count)")
+//            print("Latest Hr\(latestHr) BPM")
             
-            let dataFormatter = DateFormatter()
-            dataFormatter.dateFormat = "dd/MM/yyyy hh:mm s"
-            let StartDate = dataFormatter.string(from: data.startDate)
-            let EndDate = dataFormatter.string(from: data.endDate)
-            print("StartDate \(StartDate) : EndDate \(EndDate)")
+            for i in 0...result!.count-1 {
+                let data = result![i] as! HKQuantitySample
+                let unit = HKUnit(from: "count/min")
+                let Hr = data.quantity.doubleValue(for: unit)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy hh:mm s"
+                let StartDate = dateFormatter.string(from: data.startDate)
+                let EndDate = dateFormatter.string(from: data.endDate)
+                
+                print("Heart Rate[\(i)] = \(Hr) BPM. Start: \(StartDate), End: \(EndDate)")
+            }
+            
+//            for data in result! {
+//                let HeartRate = data.quantity.doubleValue(for: unit)
+//                print("HeartRate \(HeartRate) BPM")
+//            }
+            
+//            let dataFormatter = DateFormatter()
+//            dataFormatter.dateFormat = "dd/MM/yyyy hh:mm s"
+//            let StartDate = dataFormatter.string(from: data.startDate)
+//            let EndDate = dataFormatter.string(from: data.endDate)
+//            print("StartDate \(StartDate) : EndDate \(EndDate)")
         }
         healthStore.execute(query)
     }
